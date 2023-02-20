@@ -1,3 +1,34 @@
+let yourScoreText = document.querySelector('.your-point');
+let computerScoreText = document.querySelector('.computer-point');
+let gameEndMessage = document.querySelector('.end-message');
+let yourPoint = 0;
+let computerPoint = 0;
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        let userChoice = e.target.classList.value;
+        let resultOfRound = playRound(userChoice);
+        yourPoint += resultOfRound[1];
+        computerPoint += resultOfRound[2];
+        yourScoreText.innerHTML = yourPoint;
+        computerScoreText.innerHTML = computerPoint;
+        if (computerPoint === 5) {
+            gameEndMessage.innerHTML = "You Lost!!!";
+            setTimeout(function(){
+                window.location.reload();
+             }, 5000);
+        } else if (yourPoint === 5) {
+            gameEndMessage.innerHTML = "You Won!!!";
+            setTimeout(function(){
+                window.location.reload();
+             }, 5000);
+        }
+    })
+})
+
+
+
+
 const getComputerChoice = () => {
     randomIndex = Math.floor(Math.random()*3);
     switch(randomIndex) {
@@ -13,17 +44,8 @@ const getComputerChoice = () => {
     }
 }
 
-const getUserChoice = () => {
-    return prompt("What is your move?").toLowerCase();
-}
-
-const howManyContest = () => {
-    return parseInt(prompt("How many contest do you want to play?"));
-}
-
-const playRound = () => {
+const playRound = (userChoice) => {
     let computerChoice = getComputerChoice();
-    let userChoice = getUserChoice();
     if (userChoice === computerChoice) {
         return ["Draw", 0, 0];
     } else if (userChoice === "rock") {
@@ -56,32 +78,3 @@ const playRound = () => {
         return "Please Enter a Valid input (rock, paper, scissors):";
     }
 }
-
-const game = () => {
-    while (true) {
-        let numberOfContets = howManyContest();
-        if (isNaN(numberOfContets)) {
-            alert ("Please enter a valid number!!!");
-        } else {
-            let yourPoints = 0;
-            let computerPoints = 0;
-            let result;
-            for (let i = 0; i < numberOfContets; i++) {
-                result = playRound();
-                yourPoints += result[1];
-                computerPoints += result[2];
-                alert(`${result[0]}\nYou = ${yourPoints} / Computer = ${computerPoints}`);
-            }
-            if (yourPoints === computerPoints) {
-                alert("Draw");
-            } else if (yourPoints > computerPoints) {
-                alert(`You Won!!!.\nTotal Score:\nYou = ${yourPoints} / Computer = ${computerPoints}`);
-            } else {
-                alert(`You Lose!!!.\nTotal Score:\nYou = ${yourPoints} / Computer = ${computerPoints}`);
-            }
-            break;
-        }
-    }
-}
-
-game();

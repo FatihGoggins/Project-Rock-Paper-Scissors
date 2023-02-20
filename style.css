@@ -1,0 +1,62 @@
+body {
+    background-color: rgb(185, 131, 93);
+}
+
+.user-choice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 100px;
+}
+
+button {
+    padding: 20px;
+    font-size: 40px;
+    width: 200px;
+    background-color:black;
+    color: green;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 200px;
+    font-size: 50px;
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    width: 100px;
+}
+
+.tag {
+    font-weight: 900;
+}
+
+.your-point,
+.computer-point {
+    background-color: white;
+    width:100px;
+    height:100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-message {
+    font-size: 50px;
+    font-weight: 900;
+}
