@@ -1,80 +1,110 @@
-let yourScoreText = document.querySelector('.your-point');
-let computerScoreText = document.querySelector('.computer-point');
-let gameEndMessage = document.querySelector('.end-message');
-let yourPoint = 0;
-let computerPoint = 0;
-const buttons = document.querySelectorAll('button');
-buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-        let userChoice = e.target.classList.value;
-        let resultOfRound = playRound(userChoice);
-        yourPoint += resultOfRound[1];
-        computerPoint += resultOfRound[2];
-        yourScoreText.innerHTML = yourPoint;
-        computerScoreText.innerHTML = computerPoint;
-        if (computerPoint === 5) {
-            gameEndMessage.innerHTML = "You Lost!!!";
-            setTimeout(function(){
-                window.location.reload();
-             }, 5000);
-        } else if (yourPoint === 5) {
-            gameEndMessage.innerHTML = "You Won!!!";
-            setTimeout(function(){
-                window.location.reload();
-             }, 5000);
-        }
-    })
-})
+const container = document.querySelector('.container');
+const startButton = document.querySelector('.start');
+startButton.addEventListener('click', startGame);
 
+function startGame () {
+    container.removeChild(startButton);
+    const scoreBoard = document.createElement('p');
+    scoreBoard.textContent = '0 - 0';
+    container.appendChild(scoreBoard);
 
+    const buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+    container.appendChild(buttons);
 
+    const rockButton = document.createElement('button');
+    rockButton.textContent = 'Rock';
+    buttons.appendChild(rockButton);
+    const paperButton = document.createElement('button');
+    paperButton.textContent = 'Paper';
+    buttons.appendChild(paperButton);
+    const scissorsButton = document.createElement('button');
+    scissorsButton.textContent = 'Scissors';
+    buttons.appendChild(scissorsButton);
+
+    let yourPoint = 0;
+    let computerPoint = 0;
+    const buttonArray = document.querySelectorAll('button')
+    for (let i = 0; i < 3; i++) {
+        buttonArray[i].addEventListener('click', function(e) {
+            let userChoice = e.target.textContent;
+            let resultOfRound = playRound(userChoice);
+            console.log(resultOfRound);
+            yourPoint += resultOfRound[1];
+            computerPoint += resultOfRound[2];
+            scoreBoard.textContent = `${yourPoint} - ${computerPoint}`;
+            gameEnd(yourPoint, computerPoint, container, buttons);
+        })
+    }
+}
 
 const getComputerChoice = () => {
-    randomIndex = Math.floor(Math.random()*3);
-    switch(randomIndex) {
-        case 0:
-            return "rock";
-            break;
-        case 1:
-            return "paper";
-            break;
-        case 2:
-            return "scissors";
-            break;
-    }
+randomIndex = Math.floor(Math.random()*3);
+switch(randomIndex) {
+    case 0:
+        return "Rock";
+        break;
+    case 1:
+        return "Paper";
+        break;
+    case 2:
+        return "Scissors";
+        break;
+}
 }
 
 const playRound = (userChoice) => {
-    let computerChoice = getComputerChoice();
-    if (userChoice === computerChoice) {
-        return ["Draw", 0, 0];
-    } else if (userChoice === "rock") {
-        switch (computerChoice) {
-            case "paper":
-                return ["You lose! Paper beats rock!", 0, 1];
-                break;
-            case "scissors":
-                return ["You win! Rock beats scissors!", 1, 0];
-                break;
-        }
-    } else if (userChoice === "paper") {
-        switch (computerChoice) {
-            case "scissors":
-                return ["You lose! Scissors beats paper!", 0, 1];
-                break;
-            case "rock":
-                return ["You win! Paper beats rock!", 1, 0];
-        }
-    }  else if (userChoice === "scissors") {
-        switch (computerChoice) {
-            case "rock":
-                return ["You lose! Rock beats scissors!", 0 ,1];
-                break;
-            case "paper":
-                return ["You win! Scissors beats paper!", 1, 0];
-                break;
-        }
-    } else {
-        return "Please Enter a Valid input (rock, paper, scissors):";
+let computerChoice = getComputerChoice();
+if (userChoice === computerChoice) {
+    return ["Draw", 0, 0];
+} else if (userChoice === "Rock") {
+    switch (computerChoice) {
+        case "Paper":
+            return ["You lose! Paper beats rock!", 0, 1];
+            break;
+        case "Scissors":
+            return ["You win! Rock beats scissors!", 1, 0];
+            break;
+    }
+} else if (userChoice === "Paper") {
+    switch (computerChoice) {
+        case "Scissors":
+            return ["You lose! Scissors beats paper!", 0, 1];
+            break;
+        case "Rock":
+            return ["You win! Paper beats rock!", 1, 0];
+    }
+}  else if (userChoice === "Scissors") {
+    switch (computerChoice) {
+        case "Rock":
+            return ["You lose! Rock beats scissors!", 0 ,1];
+            break;
+        case "Paper":
+            return ["You win! Scissors beats paper!", 1, 0];
+            break;
     }
 }
+}
+
+function gameEnd(you, computer, container, buttons) {
+if (you === 5 || computer === 5) {
+container.removeChild(buttons);
+const endMessage = document.createElement("p");
+container.appendChild(endMessage);
+endMessage.classList.add('end-message');
+const resetButton = document.createElement("button");
+resetButton.textContent = "RESET";
+container.appendChild(resetButton);
+if (you > computer) {
+    endMessage.textContent = "YOU WIN!";
+} else if (computer > you) {
+    endMessage.textContent = "COMPUTER WINS!";
+} else {
+    endMessage.textContent = "DRAW";
+}
+resetButton.addEventListener("click", function() {
+    location.reload();
+})
+}
+}
+
