@@ -42,18 +42,18 @@ button:active {
 }
 
 .buttons > button {
-    flex-basis: 20%;
-    height: 150px;
+    flex-basis: 15%;
+    height: 100px;
     border: 5px solid black;
-    border-radius: 50px;
+    border-radius: 30px;
     padding: 0px;
 }
 
 .buttons {
     display: flex;
-    gap: 60px;
+    gap: 30px;
     padding: 0;
-    margin: 50px;
+    margin: 10px;
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -67,7 +67,7 @@ button:active {
 }
 
 .container > p {
-    font-size: 150px;
+    font-size: 75px;
     margin: 0 0 25px;
 }
 
@@ -80,4 +80,8 @@ button:active {
 
 .end-message {
     color: red;
+}
+
+.currentVs {
+    height: 75px;
 }

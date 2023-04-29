@@ -4,6 +4,10 @@ startButton.addEventListener('click', startGame);
 
 function startGame () {
     container.removeChild(startButton);
+    const currentVs = document.createElement('p');
+    currentVs.classList.add('currentVs');
+    currentVs.textContent = "";
+    container.appendChild(currentVs);
     const scoreBoard = document.createElement('p');
     scoreBoard.textContent = '0 - 0';
     container.appendChild(scoreBoard);
@@ -29,9 +33,9 @@ function startGame () {
         buttonArray[i].addEventListener('click', function(e) {
             let userChoice = e.target.textContent;
             let resultOfRound = playRound(userChoice);
-            console.log(resultOfRound);
             yourPoint += resultOfRound[1];
             computerPoint += resultOfRound[2];
+            currentVs.textContent = resultOfRound[0];
             scoreBoard.textContent = `${yourPoint} - ${computerPoint}`;
             gameEnd(yourPoint, computerPoint, container, buttons);
         })
@@ -50,7 +54,7 @@ switch(randomIndex) {
     case 2:
         return "Scissors";
         break;
-}
+    }
 }
 
 const playRound = (userChoice) => {
@@ -87,24 +91,24 @@ if (userChoice === computerChoice) {
 }
 
 function gameEnd(you, computer, container, buttons) {
-if (you === 5 || computer === 5) {
-container.removeChild(buttons);
-const endMessage = document.createElement("p");
-container.appendChild(endMessage);
-endMessage.classList.add('end-message');
-const resetButton = document.createElement("button");
-resetButton.textContent = "RESET";
-container.appendChild(resetButton);
-if (you > computer) {
-    endMessage.textContent = "YOU WIN!";
-} else if (computer > you) {
-    endMessage.textContent = "COMPUTER WINS!";
-} else {
-    endMessage.textContent = "DRAW";
-}
-resetButton.addEventListener("click", function() {
-    location.reload();
-})
-}
+    if (you === 5 || computer === 5) {
+    container.removeChild(buttons);
+    const endMessage = document.createElement("p");
+    container.appendChild(endMessage);
+    endMessage.classList.add('end-message');
+    const resetButton = document.createElement("button");
+    resetButton.textContent = "RESET";
+    container.appendChild(resetButton);
+    if (you > computer) {
+        endMessage.textContent = "YOU WIN!";
+    } else if (computer > you) {
+        endMessage.textContent = "COMPUTER WINS!";
+    } else {
+        endMessage.textContent = "DRAW";
+    }
+    resetButton.addEventListener("click", function() {
+        location.reload();
+    })
+    }
 }
 
